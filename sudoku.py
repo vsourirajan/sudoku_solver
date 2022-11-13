@@ -32,49 +32,8 @@ def board_to_string(board):
             ordered_vals.append(str(board[r + c]))
     return ''.join(ordered_vals)
 
-def check_win(board):
-    correct = [1,2,3,4,5,6,7,8,9]
-    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
-    for r in ROW:
-        row = []
-        for c in COL:
-            row.append(board[r + c])
-        row.sort()
-        if(row != correct):
-            return False
-
-    for c in COL:
-        col = []
-        for r in ROW:
-            col.append(board[r + c])
-        col.sort()
-        if(col != correct):
-            return False
-    
-    boxes = ['A', 'D', 'G']
-    nums = ['1','4','7']
-
-    for r in boxes:
-        for c in nums:
-            box = []
-            for countr in range(3):
-                for countc in range(3):
-                    box.append(board[chr(ord(r)+countr) + chr(ord(c)+countc)])
-            box.sort()
-            if(box != correct):
-                return False
-
-    return True
-
-    
-
-
-
 def backtracking(board):
     """Takes a board and returns solved board."""
-    # TODO: implement this
-
-
     def decreaseRemaining(position, remainingValues, val):
         decreased = set()
         for col in cols:
@@ -205,15 +164,7 @@ def backtracking(board):
             #sys.exit(0)
             return dict(currboard)
             
-            
-        #if some remaining square has no values, invalid solution and continue
-        '''for pos in remainingValues:
-            if len(remainingValues[pos]) == 0 and pos not in nonZeros:
-                return False'''
-
-       
         #find minimum remaining value position
-        #and len(remainingValues[position]) > 0
         minLength = 9
         minPos = None
         for position in remainingValues:
@@ -221,8 +172,6 @@ def backtracking(board):
                 minLength = len(remainingValues[position])
                 minPos = position
 
-        #loop through possible values of this position, adding each to the current board, updating the remaining hashmap
-        #after recursive call returns, update the remaining hashmap to what it was, current board to what it was
         for val in remainingValues[minPos]:
             currboard[minPos] = val
             decreased = decreaseRemaining(minPos, remainingValues, val)
@@ -234,10 +183,6 @@ def backtracking(board):
             addRemaining(minPos, remainingValues, val, decreased)
             currboard[minPos] = 0
 
-            '''for position in board:
-                if board[position] != 0:
-                    decreaseRemaining(position, remainingValues, board[position])'''
-    
     
         return False
 
@@ -334,22 +279,3 @@ if __name__ == '__main__':
         readme.write(str(sd))
         readme.write('\n')
         
-
-
-    
-    #currBoard dictionary
-    #hashmap key=position, value=list of remaining possible values
-
-    #each call:
-    #   check win base case if the currBoard has no empty squares
-    #   poll from the hashmap by looping through and if that square has 0 remaining values, return
-    #   once polled, loop through those values?
-    #   need hashmap that has position as a key and list of possible values as value
-    #assigning a value and making a recursive call means:
-    #   update hashmap, removing this value from all lists for keys that are "affected" by this assignment
-    #   update the heap (just add all the "affected") to the heap anyways with their hashmap list length - 1
-    #   update currboard with that value assigned to the given position
-    #after the backtracking is finished:
-    #   reupdate hashmap, adding back that value to all the lists "affected"
-    #   update currBoard by setting that position back to 0
-    #   remove all those from the heap??
