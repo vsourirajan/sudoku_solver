@@ -7,8 +7,7 @@ ast: a-star search (uses total Manhattan distance as heuristic)<br /> <br />
 Run the solver as follows (python 3):<br />  `python3 sudoku.py <solving_method_abbreviated> <sudoku_board_as_a_string_with_0_spaces>`
 <br /> <br />
 For example: <br />
-<sub><sup>`python3 sudoku.py ast 003020600900305001001806400008102900700000008006708200002609500800203009005010300`
-</sup></sub>
+<sub>`python3 sudoku.py ast 003020600900305001001806400008102900700000008006708200002609500800203009005010300`</sub>
 <br />
 The above command solves the board using a-star search and writes the solved board to output.txt
 <br /> <br />
